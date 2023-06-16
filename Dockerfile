@@ -1,3 +1,3 @@
 FROM scratch
-ENTRYPOINT ["/project"]
-COPY project /
+ENTRYPOINT ["/csv2api"]
+COPY csv2api /
