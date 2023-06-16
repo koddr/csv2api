@@ -1,0 +1,167 @@
+project_name: project
+report_sizes: true
+
+env_files:
+  github_token: ~/.github_token
+
+before:
+  hooks: [ "go mod tidy", "go mod download" ]
+
+builds:
+  -
+    id: default
+    env: [ CGO_ENABLED=0 ]
+    goos: [ linux, windows ]
+    goarch: [ amd64, arm64 ]
+#    skip: true # useful for library projects
+
+  - # HACK for macOS Ventura (13.x), which not supported UPX
+    id: macOS_only
+    env: [ CGO_ENABLED=0 ]
+    goos: [ darwin ]
+    goarch: [ amd64, arm64 ]
+
+upx:
+  -
+    ids: [ default ]
+    enabled: true
+    compress: best
+    lzma: true
+    brute: true
+#    goos: [ darwin ] # wait for v1.19
+
+release:
+  ids: [ default, macOS_only ]
+  draft: true
+  replace_existing_draft: true
+  target_commitish: "{{ .Commit }}"
+  #  discussion_category_name: General
+  prerelease: auto
+  mode: replace
+  header: |
+    ## ⚙️ The `{{ .Tag }}` release
+  footer: |
+    ## Install or update
+    
+    For native Go installation (any platforms):
+    
+    ```console
+    go install github.com/koddr/project@latest
+    ```
+
+    For [Homebrew][brew_url] users (GNU/Linux, macOS):
+    
+    ```console
+    brew upgrade koddr/tap/project
+    ```
+    
+    > 💡 Note: See the [`Wiki page`][wiki_url] to understand structures of JSON files and get general recommendations.
+    
+    ## Your help to improve project
+    
+    I'd be truly grateful for help with:
+    
+    - Creating tests (and/or benchmarks) for code
+    - Improving existing functions, structs, or tests
+    - Feature requests with interesting functions that would be good to add
+    
+    Your PRs & issues are welcome! Thanks 😉
+    
+    [brew_url]: https://brew.sh
+    [wiki_url]: https://github.com/koddr/project/wiki
+  disable: false
+  skip_upload: false
+
+brews:
+  -
+    tap:
+      owner: koddr
+      name: homebrew-tap
+      branch: main
+      token: "{{ .Env.GITHUB_TOKEN }}"
+      pull_request:
+        enabled: true
+#        draft: true # wait for v1.19
+      git:
+        url: "ssh://git@github.com:koddr/homebrew-tap.git"
+        private_key: "{{ .Env.PRIVATE_KEY_PATH }}"
+    commit_author:
+      name: Vic Shóstak
+      email: koddr.me@gmail.com
+    commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
+    folder: Formula
+    caveats: |
+      How to use this project.
+    homepage: "https://github.com/koddr/{{ .ProjectName }}"
+    description: |
+      Description of my project.
+    license: Apache 2.0
+    skip_upload: false
+#    dependencies:
+#      - name: git
+
+dockers:
+  -
+    id: "{{ .ProjectName }}"
+    ids: [ default ]
+    image_templates:
+      - "koddr/{{ .ProjectName }}:latest"
+      - "koddr/{{ .ProjectName }}:{{ .Tag }}"
+      - "koddr/{{ .ProjectName }}:v{{ .Major }}"
+      - "koddr/{{ .ProjectName }}:v{{ .Major }}.{{ .Minor }}"
+    build_flag_templates:
+      - "--pull"
+      - "--label=org.opencontainers.image.created={{ .Date }}"
+      - "--label=org.opencontainers.image.title={{ .ProjectName }}"
+      - "--label=org.opencontainers.image.revision={{ .FullCommit }}"
+      - "--label=org.opencontainers.image.version={{ .Version }}"
+      - "--platform=linux/amd64"
+    skip_push: false
+    push_flags:
+      - --tls-verify=false
+
+nfpms:
+  -
+    maintainer: Vic Shóstak <koddr.me@gmail.com>
+    description: |
+      Description of my project.
+    homepage: "https://github.com/koddr/{{ .ProjectName }}"
+    license: Apache 2.0
+    formats: [ deb, rpm, apk, archlinux ]
+#    dependencies: [ git ]
+
+archives:
+  -
+    format_overrides:
+      - goos: windows
+        format: zip
+    files: [ LICENSE, README.md ]
+    rlcp: true
+
+checksum:
+  name_template: "checksums.txt"
+
+changelog:
+  use: github
+  sort: asc
+  abbrev: -1
+  filters:
+    exclude: [ "^*.md:", "^*.yml:" ]
+  groups:
+    - title: Features
+      regexp: ^.*?(F|f)eature.*?$
+      order: 0
+    - title: Bug fixes
+      regexp: ^.*?((B|b)ug)|((F|f)ix).*?$
+      order: 1
+    - title: Improvements
+      regexp: ^.*?(I|i)mprove.*?$
+      order: 2
+    - title: Updates
+      regexp: ^.*?(U|u)pdate.*?$
+      order: 3
+    - title: Security issues
+      regexp: ^.*?(S|s)ecurity.*?$
+      order: 4
+    - title: Others
+      order: 999
