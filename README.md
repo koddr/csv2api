@@ -58,18 +58,26 @@ Prepare your config and input data files:
 And now, run `csv2api` with options:
 
 ```console
-csv2api -i
+csv2api \
+  -c /path/to/config.yml \
+  -d /path/to/data.csv \
+  -e CONFIG
 ```
 
 Done! 🎉 Your tasks have been executed:
 
 ``` console
-2023/06/15 15:51:19 👋 The processing and filtering of 10 transactions begins.
-2023/06/15 15:51:19 – According to the settings, 1 transactions were filtered to update...
-2023/06/15 15:51:19 – Starting the process of updating filtered transactions! This may take some time...
-2023/06/15 15:51:19 ✓ Field 'tags' with values '[second_touch]' in the transaction '1' has been successfully updated (HTTP 200)
-2023/06/15 15:51:20 – Saving filtered transactions to CSV file ('./filtered-1686833479.csv') in the current dir... OK!
-2023/06/15 15:51:20 ✌️ Done! All transactions from the filtered list have been successfully updated (elapsed time: 0.29s).
+Hello and welcome to csv2api! 👋
+                                
+– According to the settings in './config.yml', 5 transactions were filtered out of 10 to start the process... Please wait!
+                                                                                                                                
+ ✓ Field 'tags' with values '[paid]' in the transaction '2' has been successfully updated (HTTP 200)
+ ✓ Field 'tags' with values '[paid]' in the transaction '8' has been successfully updated (HTTP 200)
+ ✓ Field 'tags' with values '[paid]' in the transaction '10' has been successfully updated (HTTP 200)
+                                                                                                
+– Saving filtered transactions to CSV file './filtered-1686993960.csv' in the current dir... OK!
+                                
+All done! 🎉 Time elapsed: 0.11s
 ```
 
 ### 🐳 Docker-way to quick start
@@ -89,12 +97,12 @@ package, you can find on the [pkg.go.dev][go_dev_url] page.
 
 ## 🧩 Options
 
-| Option | Description                                                                                                                  | Is required? | Default value  |
-|--------|------------------------------------------------------------------------------------------------------------------------------|--------------|----------------|
-| `-i`   | set to generate initial config (`config.yaml`) and example data (`data.csv`) files                                           | no           | `false`        |
-| `-c`   | set path to your config file                                                                                                 | yes          | `./config.yml` |
-| `-d`   | set path to your CSV file with input data                                                                                    | yes          | `./data.csv`   |
-| `-e`   | set prefix used in your environment variables                                                                                | no           | `CONFIG`       |
+| Option | Description                                                                        | Is required? | Default value  |
+|--------|------------------------------------------------------------------------------------|--------------|----------------|
+| `-i`   | set to generate initial config (`config.yaml`) and example data (`data.csv`) files | no           | `false`        |
+| `-c`   | set path to your config file                                                       | no           | `./config.yml` |
+| `-d`   | set path to your CSV file with input data                                          | no           | `./data.csv`   |
+| `-e`   | set prefix used in your environment variables                                      | no           | `CONFIG`       |
 
 ## ✨ Solving case
 
