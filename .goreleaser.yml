@@ -1,11 +1,14 @@
-project_name: project
+project_name: csv2api
 report_sizes: true
 
 env_files:
   github_token: ~/.github_token
 
 before:
-  hooks: [ "go mod tidy", "go mod download" ]
+  hooks:
+    - go mod tidy
+    - go mod download
+    -
 
 builds:
   -
@@ -46,13 +49,13 @@ release:
     For native Go installation (any platforms):
     
     ```console
-    go install github.com/koddr/project@latest
+    go install github.com/koddr/csv2api@latest
     ```
 
     For [Homebrew][brew_url] users (GNU/Linux, macOS):
     
     ```console
-    brew upgrade koddr/tap/project
+    brew upgrade koddr/tap/csv2api
     ```
     
     > 💡 Note: See the [`Wiki page`][wiki_url] to understand structures of JSON files and get general recommendations.
@@ -68,7 +71,7 @@ release:
     Your PRs & issues are welcome! Thanks 😉
     
     [brew_url]: https://brew.sh
-    [wiki_url]: https://github.com/koddr/project/wiki
+    [wiki_url]: https://github.com/koddr/csv2api/wiki
   disable: false
   skip_upload: false
 
