@@ -48,9 +48,13 @@ csv2api -i
 Prepare your config and input data files:
 
 - In your `config.yml`:
-  - ...
+  - Make sure that the first column name in the `columns_order` section is a 
+    primary key (PK) for your process.
+  - Set up your API (base URL, token, endpoints, etc) in the `api` section.
+  - Set up the filter for your fields in the `filter_columns` section.
+  - Set up fields to be updated in the `update_fields` section.
 - In your input `data.csv`:
-  - ...
+  - Make sure that the first line of your CSV file contains the correct field names.
 
 > 💡 Note: See the repository's [Wiki][wiki_url] page to understand the
 > structure of the config and input data files.
