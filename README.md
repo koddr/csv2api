@@ -64,7 +64,7 @@ csv2api \
   -e CONFIG
 ```
 
-Done! 🎉 Your tasks have been executed:
+Done! 🎉 Your transactions have been performed:
 
 ``` console
 Hello and welcome to csv2api! 👋
@@ -89,11 +89,6 @@ isolated container:
 ```console
 docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/csv2api:latest [COMMANDS]
 ```
-
-## ✨ Usage
-
-Basic usage and full code examples of all functions of the `csv2api` 
-package, you can find on the [pkg.go.dev][go_dev_url] page.
 
 ## 🧩 Options
 
