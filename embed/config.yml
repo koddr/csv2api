@@ -1,0 +1,70 @@
+# save_filtered_to_csv allows to save all filtered data
+# to the CSV file (for report or else)
+save_filtered_to_csv: true
+
+# columns_order allows to set order of the columns in the input data file
+#
+# WARNING: this order will be saved in all scripts when processing
+# the CSV file! The names of the columns must match the header
+# line of the file completely.
+columns_order:
+  - id # first column is the primary key (PK)
+  - order_id
+  - is_paid
+
+# csv_separator allows to set a column separator
+# for the input data file (CSV)
+csv_separator: ','
+
+# api allows to set params for API requests
+api:
+
+  # base_url allows to set a base URL for API
+  base_url: my-api-server.com
+
+  # base_url_schema allows to set an HTTP schema for API
+  base_url_schema: https
+
+  # auth_method allows to set an authorization method to make API request
+  auth_method: Bearer
+
+  # token allows to set an authorization token to make API requests
+  #
+  # WARNING: do not forget to add this file to .gitignore, if you place
+  # token to this file! Please use environment variables for security.
+  token: '{{ CONFIG_API_TOKEN }}'
+
+  # request_timeout allows to set a timeout in seconds
+  # after each request to API (prevent throttling)
+  request_timeout: 0
+
+  # update_endpoint allows to set endpoint for update fields
+  update_endpoint:
+    endpoint_name: /api/v1/order/%s
+    content_type: application/json
+    add_pk_to_endpoint_name: true
+    http_method: PATCH
+    endpoint_body:
+      data:
+        id: id
+        attributes:
+          tags: tags
+
+# filter_columns allows to set columns, that will be filtered
+filter_columns:
+
+  - column_name: order_id
+    condition: NEQ
+    value: ''
+
+# update_fields allows to set fields and its values, that will be updated,
+# if conditions are successes
+update_fields:
+
+  - field_name: tags
+    values:
+      - paid
+    conditions:
+      - column_name: is_paid
+        condition: EQ
+        value: '1'
