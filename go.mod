@@ -3,13 +3,13 @@ module github.com/koddr/csv2api
 go 1.20
 
 require (
+	github.com/charmbracelet/lipgloss v0.7.1
 	github.com/google/wire v0.5.0
 	github.com/koddr/gosl v1.4.0
 )
 
 require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-	github.com/charmbracelet/lipgloss v0.7.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
