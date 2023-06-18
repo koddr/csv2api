@@ -13,6 +13,11 @@ func newConfig() (*Config, error) {
 		return nil, fmt.Errorf("invalid format of config file, see: %s", WikiPageURL)
 	}
 
+	// Check, if the input data file is not empty.
+	if inputDataFilePath == "" {
+		return nil, fmt.Errorf("path to the input data file is empty, see: %s", WikiPageURL)
+	}
+
 	// Create a new config instance.
 	config := &Config{}
 

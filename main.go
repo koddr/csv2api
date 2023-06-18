@@ -10,8 +10,8 @@ import (
 func main() {
 	// Listen to flags.
 	flag.BoolVar(&initConfig, "i", false, "set to generate initial config and example data files")
-	flag.StringVar(&configFilePath, "c", "./config.yml", "set path to your config file")
-	flag.StringVar(&inputDataFilePath, "d", "./data.csv", "set path to your CSV file with input data")
+	flag.StringVar(&configFilePath, "c", "", "set path to your config file")
+	flag.StringVar(&inputDataFilePath, "d", "", "set path to your CSV file with input data")
 	flag.StringVar(&envPrefix, "e", "CONFIG", "set prefix used in your environment variables")
 
 	// Parse all given flags.
@@ -22,7 +22,7 @@ func main() {
 		// Create the config file in the current dir.
 		if err := os.WriteFile(filepath.Clean("./config.yml"), embedConfigYAMLFile, 0o600); err != nil {
 			printStyled(
-				fmt.Sprintf("✕ There was an error: %v", err),
+				fmt.Sprintf("✕ There was an error with generate config.yml file: %v", err),
 				"",
 			)
 		}
@@ -30,7 +30,7 @@ func main() {
 		// Create the example data file in the current dir.
 		if err := os.WriteFile(filepath.Clean("./data.csv"), embedDataCSVFile, 0o600); err != nil {
 			printStyled(
-				fmt.Sprintf("✕ There was an error: %v", err),
+				fmt.Sprintf("✕ There was an error with generate data.csv file: %v", err),
 				"",
 			)
 		}
@@ -45,7 +45,7 @@ func main() {
 		app, err := initialize()
 		if err != nil {
 			printStyled(
-				fmt.Sprintf("✕ There was an error: %v", err),
+				fmt.Sprintf("✕ There was an error with initialize app: %v", err),
 				"",
 			)
 		}
@@ -53,7 +53,7 @@ func main() {
 		// App start.
 		if err = app.start(); err != nil {
 			printStyled(
-				fmt.Sprintf("✕ There was an error: %v", err),
+				fmt.Sprintf("✕ There was an error with starting app: %v", err),
 				"",
 			)
 		}

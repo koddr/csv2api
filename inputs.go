@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"encoding/csv"
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -12,11 +11,6 @@ import (
 
 // newInputs provides a new data input instance.
 func newInputs(config *Config) (*Inputs, error) {
-	// Check, if the input data file is not empty.
-	if inputDataFilePath == "" {
-		return nil, errors.New("file with input data is empty")
-	}
-
 	// Open the given file with input data.
 	file, err := os.Open(filepath.Clean(inputDataFilePath))
 	if err != nil {
@@ -29,9 +23,9 @@ func newInputs(config *Config) (*Inputs, error) {
 	csvReader.LazyQuotes = true
 
 	// Check, if the CSV column separator is not empty in config.
-	if config.CSVSeparator != "" {
+	if config.CSVColumnSeparator != "" {
 		// Decode rune from the string.
-		separator, _ := utf8.DecodeRuneInString(config.CSVSeparator)
+		separator, _ := utf8.DecodeRuneInString(config.CSVColumnSeparator)
 
 		// Set separator to the CSV reader.
 		csvReader.Comma = separator

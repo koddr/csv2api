@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 
 	"github.com/koddr/gosl"
@@ -9,16 +8,11 @@ import (
 
 // newOutputs provides a new output instance.
 func newOutputs(config *Config, inputs *Inputs, filtered *Filtered) (*Outputs, error) {
-	// Check, if the input data file is not empty.
-	if inputs.Data == nil || len(inputs.Data) > 0 {
-		return nil, errors.New("file with input data is empty")
-	}
-
 	// Create a temp slice of slices for data.
 	dataToOutput := inputs.Data
 
 	// Check, if filtered data is not nil or empty.
-	if filtered.Data != nil || len(filtered.Data) > 0 {
+	if filtered.Data != nil && len(filtered.Data) > 0 {
 		// Set filtered data to the temp slice of slices.
 		dataToOutput = filtered.Data
 	}

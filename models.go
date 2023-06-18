@@ -12,7 +12,7 @@ type App struct {
 type Config struct {
 	SaveFilteredPKToCSV bool      `koanf:"save_filtered_pk_to_csv"`
 	ColumnsOrder        []string  `koanf:"columns_order"`
-	CSVSeparator        string    `koanf:"csv_separator"`
+	CSVColumnSeparator  string    `koanf:"csv_column_separator"`
 	API                 *API      `koanf:"api"`
 	FilterColumns       []*Column `koanf:"filter_columns"`
 	UpdateFields        []*Field  `koanf:"update_fields"`
