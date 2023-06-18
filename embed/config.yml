@@ -1,6 +1,6 @@
-# save_filtered_to_csv allows to save all filtered data
+# save_filtered_pk_to_csv allows to save all filtered data
 # to the CSV file (for report or else)
-save_filtered_to_csv: true
+save_filtered_pk_to_csv: true
 
 # columns_order allows to set order of the columns in the input data file
 #
