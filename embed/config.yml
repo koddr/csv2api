@@ -12,9 +12,9 @@ columns_order:
   - order_id
   - is_paid
 
-# csv_separator allows to set a column separator
+# csv_column_separator allows to set a column separator
 # for the input data file (CSV)
-csv_separator: ','
+csv_column_separator: ','
 
 # api allows to set params for API requests
 api:
