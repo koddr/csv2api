@@ -73,7 +73,8 @@ Done! 🎉 Your transactions have been performed:
 ``` console
 Hello and welcome to csv2api! 👋
                                 
-– According to the settings in './config.yml', 5 transactions were filtered out of 10 to start the process... Please wait!
+– According to the settings in './config.yml', 5 transactions were filtered out of 10 to start the process.
+– Only 3 transactions got into the final set of actions to be taken... Please wait!
                                                                                                                                 
  ✓ Field 'tags' with values '[paid]' in the transaction '2' has been successfully updated (HTTP 200)
  ✓ Field 'tags' with values '[paid]' in the transaction '8' has been successfully updated (HTTP 200)
@@ -96,12 +97,12 @@ docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/csv2api:latest [COMMANDS]
 
 ## 🧩 Options
 
-| Option | Description                                                                        | Is required? | Default value  |
-|--------|------------------------------------------------------------------------------------|--------------|----------------|
-| `-i`   | set to generate initial config (`config.yaml`) and example data (`data.csv`) files | no           | `false`        |
-| `-c`   | set path to your config file                                                       | no           | `./config.yml` |
-| `-d`   | set path to your CSV file with input data                                          | no           | `./data.csv`   |
-| `-e`   | set prefix used in your environment variables                                      | no           | `CONFIG`       |
+| Option | Description                                                                        | Is required? | Default value |
+|--------|------------------------------------------------------------------------------------|--------------|---------------|
+| `-i`   | set to generate initial config (`config.yaml`) and example data (`data.csv`) files | no           | `false`       |
+| `-c`   | set path to your config file                                                       | yes          | `""`          |
+| `-d`   | set path to your CSV file with input data                                          | yes          | `""`          |
+| `-e`   | set prefix used in your environment variables                                      | no           | `CONFIG`      |
 
 ## ✨ Solving case
 
