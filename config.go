@@ -6,11 +6,11 @@ import (
 	"github.com/koddr/gosl"
 )
 
-// newConfig ...
+// newConfig provides a new config instance.
 func newConfig() (*Config, error) {
 	// Check, if the file name is too short.
 	if configFilePath == "" {
-		return nil, fmt.Errorf("parsing error: invalid format of config file, see: %s", WikiPageURL)
+		return nil, fmt.Errorf("invalid format of config file, see: %s", WikiPageURL)
 	}
 
 	// Create a new config instance.

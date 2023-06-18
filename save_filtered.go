@@ -8,8 +8,9 @@ import (
 	"time"
 )
 
-func (app *App) saveFilteredToCSV() error {
-	//
+// saveFilteredPKToCSV provides save process to filtered PK.
+func (app *App) saveFilteredPKToCSV() error {
+	// Create name for CSV file.
 	fileName := fmt.Sprintf("./filtered-%d.csv", time.Now().Unix())
 
 	// Create a new CSV file in the current dir.
@@ -24,15 +25,15 @@ func (app *App) saveFilteredToCSV() error {
 	defer writer.Flush()
 
 	// Write the header with PK column name of the CSV file.
-	if err = writer.Write([]string{app.Config.ColumnsOrder[0]}); err != nil {
-		return err
+	if errWriter := writer.Write([]string{app.Config.ColumnsOrder[0]}); errWriter != nil {
+		return errWriter
 	}
 
 	// Write data body of the CSV file.
 	for _, data := range app.Outputs.Data {
 		// Take only PK column data.
-		if err = writer.Write([]string{data.ID}); err != nil {
-			return err
+		if errWriter := writer.Write([]string{data.ID}); errWriter != nil {
+			return errWriter
 		}
 	}
 

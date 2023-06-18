@@ -15,15 +15,15 @@ import (
 // updateField provides update process for the given transaction ID.
 func (app *App) updateField(id, fieldName string, fieldValues []string) error {
 	// Set primary key (PK) to the endpoint body.
-	_, body := ModifyByValue(app.Config.API.UpdateEndpoint.EndpointBody, app.Config.ColumnsOrder[0], id)
+	_, body := modifyByValue(app.Config.API.UpdateEndpoint.EndpointBody, app.Config.ColumnsOrder[0], id)
 
 	// Check, if field has a many values.
 	if len(fieldValues) > 1 {
 		// If true, set many values to the field.
-		_, body = ModifyByValue(body, fieldName, fieldValues)
+		_, body = modifyByValue(body, fieldName, fieldValues)
 	} else {
 		// If false, set the only one value to the field.
-		_, body = ModifyByValue(body, fieldName, fieldValues[0])
+		_, body = modifyByValue(body, fieldName, fieldValues[0])
 	}
 
 	// Marshaling endpoint body.

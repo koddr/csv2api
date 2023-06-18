@@ -1,6 +1,6 @@
 package main
 
-// App ...
+// App represents struct for the application instance.
 type App struct {
 	Config   *Config
 	Inputs   *Inputs
@@ -8,17 +8,17 @@ type App struct {
 	Outputs  *Outputs
 }
 
-// Config ...
+// Config represents struct for the configuration instance.
 type Config struct {
-	SaveFilteredToCSV bool      `koanf:"save_filtered_to_csv"`
-	ColumnsOrder      []string  `koanf:"columns_order"`
-	CSVSeparator      string    `koanf:"csv_separator"`
-	API               *API      `koanf:"api"`
-	FilterColumns     []*Column `koanf:"filter_columns"`
-	UpdateFields      []*Field  `koanf:"update_fields"`
+	SaveFilteredPKToCSV bool      `koanf:"save_filtered_pk_to_csv"`
+	ColumnsOrder        []string  `koanf:"columns_order"`
+	CSVSeparator        string    `koanf:"csv_separator"`
+	API                 *API      `koanf:"api"`
+	FilterColumns       []*Column `koanf:"filter_columns"`
+	UpdateFields        []*Field  `koanf:"update_fields"`
 }
 
-// API ...
+// API represents struct for the api instance.
 type API struct {
 	RequestTimeout int       `koanf:"request_timeout"`
 	BaseURL        string    `koanf:"base_url"`
@@ -28,21 +28,21 @@ type API struct {
 	UpdateEndpoint *Endpoint `koanf:"update_endpoint"`
 }
 
-// Column ...
+// Column represents struct for the one column instance..
 type Column struct {
 	ColumnName string `koanf:"column_name"`
 	Condition  string `koanf:"condition"`
 	Value      string `koanf:"value"`
 }
 
-// Field ...
+// Field represents struct for the one field instance.
 type Field struct {
 	FieldName  string    `koanf:"field_name"`
 	Values     []string  `koanf:"values"`
 	Conditions []*Column `koanf:"conditions"`
 }
 
-// Endpoint ...
+// Endpoint represents struct for the one endpoint instance.
 type Endpoint struct {
 	AddPKToEndpointName bool           `koanf:"add_pk_to_endpoint_name"`
 	EndpointName        string         `koanf:"endpoint_name"`
@@ -51,22 +51,23 @@ type Endpoint struct {
 	EndpointBody        map[string]any `koanf:"endpoint_body"`
 }
 
-// Inputs ...
+// Inputs represents struct for the inputs instance.
 type Inputs struct {
 	Mapping map[string]int
 	Data    [][]string
 }
 
-// Filtered ...
+// Filtered represents struct for the filtered instance.
 type Filtered struct {
 	Data [][]string
 }
 
-// Outputs ...
+// Outputs represents struct for the outputs instance.
 type Outputs struct {
 	Data []*Output
 }
 
+// Output represents struct for the one output instance.
 type Output struct {
 	ID        string
 	FieldName string

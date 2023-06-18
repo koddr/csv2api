@@ -29,20 +29,21 @@ var (
 	configFilePath, inputDataFilePath, envPrefix string
 )
 
-// removeDuplicates ...
+// removeDuplicates provides process to remove all duplicates in the given slice
+// of slices, and return cleared slice ot slices.
 func removeDuplicates(source [][]string) [][]string {
-	//
+	// Create a temp map and slice.
 	seen := make(map[string]bool, 0)
 	result := make([][]string, 0)
 
-	//
+	// Run loop for all slices in the given source.
 	for _, item := range source {
-		//
+		// Check, if current key is not in source slice.
 		if _, ok := seen[fmt.Sprint(item)]; !ok {
-			//
+			// Collect element into temp slice.
 			result = append(result, item)
 
-			//
+			// Set marker.
 			seen[fmt.Sprint(item)] = true
 		}
 	}
@@ -50,18 +51,18 @@ func removeDuplicates(source [][]string) [][]string {
 	return result
 }
 
-// matchIndexes ...
+// matchIndexes provides process to matching indexes for mapping columns.
 func matchIndexes(wanted, source []string) map[string]int {
-	//
+	// Create a temp map.
 	indexes := make(map[string]int, 0)
 
-	//
+	// Loop for all strings in the given wanted slice.
 	for _, columnName := range wanted {
-		//
+		// Loop for all strings in the given source slice.
 		for sourceIndex, sourceName := range source {
-			//
+			// Check, if names of the source and wanted slices were match.
 			if sourceName == columnName {
-				//
+				// Collect index of the source slice to the temp map.
 				indexes[columnName] = sourceIndex
 				break
 			}
@@ -71,8 +72,8 @@ func matchIndexes(wanted, source []string) map[string]int {
 	return indexes
 }
 
-// matchValues ...
-func matchValues(value1, value2 string, condition string) (bool, error) {
+// matchValues provides process to matching two values with a condition.
+func matchValues(value1, value2, condition string) (bool, error) {
 	// Check condition.
 	switch condition {
 	case "EQ":
@@ -86,7 +87,7 @@ func matchValues(value1, value2 string, condition string) (bool, error) {
 		val1, err := strconv.Atoi(value1)
 		if err != nil {
 			return false, fmt.Errorf(
-				"error: wrong value '%s' to convert input value to type 'int' for this condition '%s'",
+				"wrong value '%s' to convert input value to type 'int' for this condition '%s'",
 				value1, condition,
 			)
 		}
@@ -95,7 +96,7 @@ func matchValues(value1, value2 string, condition string) (bool, error) {
 		val2, err := strconv.Atoi(value2)
 		if err != nil {
 			return false, fmt.Errorf(
-				"error: wrong value '%s' to convert filter value to type 'int' for this condition '%s'",
+				"wrong value '%s' to convert filter value to type 'int' for this condition '%s'",
 				value2, condition,
 			)
 		}
@@ -120,30 +121,29 @@ func matchValues(value1, value2 string, condition string) (bool, error) {
 	return false, fmt.Errorf("unknown condition: %s", condition)
 }
 
-// ModifyByValue ...
-func ModifyByValue(m map[string]any, foundValue, newValue any) (bool, map[string]any) {
-	//
-	var foundKey bool
-
-	//
+// modifyByValue provides process to modify the given map by value.
+func modifyByValue(m map[string]any, foundValue, newValue any) (foundKey bool, results map[string]any) {
+	// Check, if the given map is empty.
 	if m == nil {
 		return foundKey, nil
 	}
 
-	//
-	for k, v := range m {
-		if reflect.DeepEqual(v, foundValue) {
-			//
-			m[k] = newValue
-			foundKey = true
-		} else if mv, ok := v.(map[string]any); ok {
-			//
-			isFound, mod := ModifyByValue(mv, foundValue, newValue)
+	// Loop for all keys in the given map.
+	for key, value := range m {
+		// Check map by reflect.
+		if reflect.DeepEqual(value, foundValue) {
+			// Modify a key of the given map.
+			m[key] = newValue
+			foundKey = true // switch the temp variable
+		} else if mv, ok := value.(map[string]any); ok {
+			// Run recurrent function.
+			isFound, modified := modifyByValue(mv, foundValue, newValue)
 
-			//
+			// Check, if key is found.
 			if isFound {
-				m[k] = mod
-				foundKey = true
+				// Modify a key of the given map.
+				m[key] = modified
+				foundKey = true // switch the temp variable
 			}
 		}
 	}
@@ -151,10 +151,12 @@ func ModifyByValue(m map[string]any, foundValue, newValue any) (bool, map[string
 	return foundKey, m
 }
 
-// printStyled ...
+// printStyled provides a beauty output for console.
 func printStyled(s, style string) {
+	// Create a new blank style or the lipgloss.
 	lp := lipgloss.NewStyle()
 
+	// Switch between styles.
 	switch style {
 	case "margin-top-bottom":
 		fmt.Println(gosl.RenderStyled(s, lp.MarginTop(1).MarginBottom(1)))

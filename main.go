@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"log"
+	"fmt"
 	"os"
 	"path/filepath"
 )
@@ -20,27 +20,42 @@ func main() {
 	// If '-i' flag is true, generates config and example data files.
 	if initConfig {
 		// Create the config file in the current dir.
-		if err := os.WriteFile(filepath.Clean("./config.yml"), embedConfigYAMLFile, 0o644); err != nil {
-			log.Fatal(err)
+		if err := os.WriteFile(filepath.Clean("./config.yml"), embedConfigYAMLFile, 0o600); err != nil {
+			printStyled(
+				fmt.Sprintf("✕ There was an error: %v", err),
+				"",
+			)
 		}
 
 		// Create the example data file in the current dir.
-		if err := os.WriteFile(filepath.Clean("./data.csv"), embedDataCSVFile, 0o644); err != nil {
-			log.Fatal(err)
+		if err := os.WriteFile(filepath.Clean("./data.csv"), embedDataCSVFile, 0o600); err != nil {
+			printStyled(
+				fmt.Sprintf("✕ There was an error: %v", err),
+				"",
+			)
 		}
 
 		// Show success message.
-		log.Println("The configuration and example data files was successfully generated in the current dir!")
+		printStyled(
+			"The configuration and example data files was successfully generated in the current dir!",
+			"margin-top-bottom",
+		)
 	} else {
 		// App initialization.
 		app, err := initialize()
 		if err != nil {
-			log.Fatal(err)
+			printStyled(
+				fmt.Sprintf("✕ There was an error: %v", err),
+				"",
+			)
 		}
 
 		// App start.
 		if err = app.start(); err != nil {
-			log.Fatal(err)
+			printStyled(
+				fmt.Sprintf("✕ There was an error: %v", err),
+				"",
+			)
 		}
 	}
 }
