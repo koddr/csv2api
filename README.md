@@ -1,4 +1,4 @@
-# csv2api – Parse CSV file with data filtering and sending to API
+# csv2api – Parse CSV with filtering and sending to API
 
 [![Go version][go_version_img]][go_dev_url]
 [![Go report][go_report_img]][go_report_url]
