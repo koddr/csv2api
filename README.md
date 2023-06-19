@@ -1,18 +1,29 @@
-# csv2api – 
+# csv2api – Parse CSV file with data filtering and sending to API
 
 [![Go version][go_version_img]][go_dev_url]
 [![Go report][go_report_img]][go_report_url]
-![Code coverage][go_code_coverage_img]
 [![Wiki][wiki_img]][wiki_url]
 [![License][license_img]][license_url]
 
-**csv2api** description ...
+The **csv2api** parser reads the CSV file with the raw data, filters the 
+records, identifies fields to be changed, and sends a request to update the 
+data to the specified endpoint of your REST API. 
+
+All actions take place according to the settings in the configuration file.
 
 Features:
 
-- 100% **free** and **open source**
-- ...
-- ...
+- 100% **free** and **open source**.
+- Works with any **size** of input CSV file.
+- Use **any** configuration file format: JSON, YAML, TOML, or HCL (Terraform).
+- Ability to keep a configuration file (_and, in the future, input data 
+  file_) on a **remote server** with HTTP access, it will be read as if it 
+  was in a folder on your local machine. 
+- Configure **any** request body for the REST API endpoint directly in the 
+  configuration file (in a clear declarative style).
+- Extensive options for **filtering** incoming data from a CSV file.
+- Provides extensive capabilities for constructing **multiple filters** to 
+  accurately perform actions on selected fields.
 
 ## ⚡️ Quick start
 
@@ -106,11 +117,28 @@ docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/csv2api:latest [COMMANDS]
 
 ## ✨ Solving case
 
-...
+In my work, I often have to work with **large amounts** of raw data in CSV format. 
 
-## 💡 Motivation
+Usually it goes like this:
 
-...
+1. Unload a file with data from one system.
+2. Clean up this file from duplicates and unnecessary columns.
+3. Make some changes in some columns of some rows.
+4. Mapping the processed lines from CSV file to the database structure fields.
+5. Write a function to bypass the CSV file and form the query body.
+6. Write an HTTP client that will send requests to the specified REST API 
+   endpoint.
+
+> And I'm not talking about the fact that the final REST API (where to send a 
+request with the processed data) **do not** always have the same parameters for 
+the request body.
+
+To ease this whole process, I created this parser that takes absolutely any 
+data file as input, does the conversions and filtering, and is set up in one 
+single configuration file. 
+
+Just prepare the data, set the configuration to your liking, run `csv2api` 
+and wait a bit! Yes, it's that simple.
 
 ## 🏆 A win-win cooperation
 
