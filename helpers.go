@@ -3,7 +3,6 @@ package main
 import (
 	_ "embed"
 	"fmt"
-	"reflect"
 	"strconv"
 
 	"github.com/charmbracelet/lipgloss"
@@ -119,36 +118,6 @@ func matchValues(value1, value2, condition string) (bool, error) {
 	}
 
 	return false, fmt.Errorf("unknown condition: %s", condition)
-}
-
-// modifyByValue provides process to modify the given map by value.
-func modifyByValue(m map[string]any, foundValue, newValue any) (foundKey bool, results map[string]any) {
-	// Check, if the given map is empty.
-	if m == nil {
-		return foundKey, nil
-	}
-
-	// Loop for all keys in the given map.
-	for key, value := range m {
-		// Check map by reflect.
-		if reflect.DeepEqual(value, foundValue) {
-			// Modify a key of the given map.
-			m[key] = newValue
-			foundKey = true // switch the temp variable
-		} else if mv, ok := value.(map[string]any); ok {
-			// Run recurrent function.
-			isFound, modified := modifyByValue(mv, foundValue, newValue)
-
-			// Check, if key is found.
-			if isFound {
-				// Modify a key of the given map.
-				m[key] = modified
-				foundKey = true // switch the temp variable
-			}
-		}
-	}
-
-	return foundKey, m
 }
 
 // printStyled provides a beauty output for console.
