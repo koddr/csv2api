@@ -125,9 +125,10 @@ Usually it goes like this:
 2. Clean up this file from duplicates and unnecessary columns.
 3. Make some changes in some columns of some rows.
 4. Mapping the processed lines from CSV file to the database structure fields.
-5. Write a function to bypass the CSV file and form the query body.
-6. Write an HTTP client that will send requests to the specified REST API 
-   endpoint.
+5. Write a function to bypass the CSV file and form the request body.
+6. Write an HTTP client that will send requests to the REST API endpoint.
+7. Send prepared request body to the REST API endpoint in other system 
+   for specified DB records.
 
 > And I'm not talking about the fact that the final REST API (where to send a 
 request with the processed data) **do not** always have the same parameters for 
