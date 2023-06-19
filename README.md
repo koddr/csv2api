@@ -103,7 +103,7 @@ free to using our [official Docker image][docker_image_url] and run it from
 isolated container:
 
 ```console
-docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/csv2api:latest [COMMANDS]
+docker run --rm -it -v ${PWD}:${PWD} -w ${PWD} koddr/csv2api:latest [OPTIONS]
 ```
 
 ## 🧩 Options
