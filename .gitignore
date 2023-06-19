@@ -31,5 +31,6 @@ bin/
 # Goreleaser directories
 dist/
 
-# Go generate files
+# Generate files
 *_gen.go
+filtered-*.csv
