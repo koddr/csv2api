@@ -8,7 +8,9 @@ before:
   hooks:
     - go mod tidy
     - go mod download
-    -
+    - go run github.com/google/wire/cmd/wire@latest
+    - go run github.com/securego/gosec/v2/cmd/gosec@latest -quiet ./...
+    - go run github.com/go-critic/go-critic/cmd/gocritic@latest check -enableAll ./...
 
 builds:
   -
@@ -94,10 +96,34 @@ brews:
     commit_msg_template: "Brew formula update for {{ .ProjectName }} version {{ .Tag }}"
     folder: Formula
     caveats: |
-      How to use this project.
+      After install csv2api, run it with '-i' option to generate initial config.yml and data.csv files in the current dir:
+  
+      $ csv2api -i
+      
+      Prepare your config and input data files:
+      
+      In your config.yml:
+      
+      - Make sure that the first column name in the columns_order section is a primary key (PK) for your process.
+      - Set up your API (base URL, token, endpoints, etc) in the api section.
+      - Set up the filter for your fields in the filter_columns section.
+      - Set up fields to be updated in the update_fields section.
+      
+      In your input data.csv:
+      
+      - Make sure that the first line of your CSV file contains the correct field names.
+      
+      💡 Note: See the repository's Wiki page (https://github.com/koddr/csv2api/wiki) to understand the structure of the config and input data files.
+      
+      And now, run csv2api with options:
+        
+      $ csv2api -c /path/to/config.yml -d /path/to/data.csv -e CONFIG
+      
+      Done! Your transactions have been performed.
     homepage: "https://github.com/koddr/{{ .ProjectName }}"
     description: |
-      Description of my project.
+      The csv2api parser reads the CSV file with the raw data, filters the records, identifies fields to be changed, and sends a request to update the data to the specified endpoint of your REST API.
+      All actions take place according to the settings in the configuration file.
     license: Apache 2.0
     skip_upload: false
 #    dependencies:
@@ -127,7 +153,8 @@ nfpms:
   -
     maintainer: Vic Shóstak <koddr.me@gmail.com>
     description: |
-      Description of my project.
+      The csv2api parser reads the CSV file with the raw data, filters the records, identifies fields to be changed, and sends a request to update the data to the specified endpoint of your REST API.
+      All actions take place according to the settings in the configuration file.
     homepage: "https://github.com/koddr/{{ .ProjectName }}"
     license: Apache 2.0
     formats: [ deb, rpm, apk, archlinux ]
