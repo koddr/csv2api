@@ -19,6 +19,8 @@ jobs:
           go-version: ${{ matrix.go }}
       - name: Run "google/wire" for DI
         run: go run github.com/google/wire/cmd/wire@latest
+      - name: Run "govulncheck" scanner
+        run: go run golang.org/x/vuln/cmd/govulncheck@latest -test ./...
       - name: Run "securego/gosec" scanner
         run: go run github.com/securego/gosec/v2/cmd/gosec@latest -quiet ./...
       - name: Run "go-critic/go-critic" linter
