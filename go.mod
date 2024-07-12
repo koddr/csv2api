@@ -3,7 +3,7 @@ module github.com/koddr/csv2api
 go 1.20
 
 require (
-	github.com/charmbracelet/lipgloss v0.11.1
+	github.com/charmbracelet/lipgloss v0.12.0
 	github.com/google/wire v0.6.0
 	github.com/koddr/gosl v1.6.0
 )
