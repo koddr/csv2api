@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/charmbracelet/lipgloss v1.1.0
-	github.com/google/wire v0.6.0
+	github.com/google/wire v0.7.0
 	github.com/koddr/gosl v1.6.0
 )
 
